@@ -5,16 +5,15 @@
  */
 package za.co.tangent.web.controller;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -23,24 +22,20 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class ProjectsController {
 
-    @RequestMapping(value = "/listUsers", method = RequestMethod.GET)
+    @RequestMapping(value = "/listProjects", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    List listUsers() {
+    String getProjects(@RequestBody String token) {
+
+        String url = "http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/";
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("content-type", "application/json");
+        params.add("Authorization", "Token " + token);
         RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8080/SpringServiceJsonSample/service/user/";
 
-        List<LinkedHashMap> users = restTemplate.getForObject(url, List.class);
+        String result = restTemplate.getForObject(url, String.class, params);
+        System.out.println(result);
 
-        return users;
+        return result;
     }
-
-    @RequestMapping(value = "/dispUser/{userid}", method = RequestMethod.GET)
-    public @ResponseBody
-    ModelAndView dispUser(@PathVariable("userid") int userid) {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "http://localhost:8080/SpringServiceJsonSample/service/user/{userid}";
-        User user = restTemplate.getForObject(url, User.class, userid);
-        return new ModelAndView("dispUser", "user", user);
-    }
-
 }

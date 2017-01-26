@@ -24,83 +24,34 @@
     <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Billing Directory Home</a>
+                <a class="navbar-brand" href="#">Tangent Projects Directory</a>
             </div>
         </div>
     </nav>
 
     <div class="container" style="min-height: 500px">
 
-        <div class="starter-template">
-            <h1>Search Account</h1>
-            <br>
-
-            <div id="feedback"></div>
-
-            <form class="form-horizontal" id="search-form">
-                <div class="form-group form-group-lg">
-                    <label class="col-sm-2 control-label">Account Number</label>
-                    <div class="col-sm-10">
-                        <input type=text class="form-control" id="accountNumber">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" id="bth-search"
-                                class="btn btn-primary btn-lg">Search</button>
-                    </div>
-                </div>
-            </form>
-            <br>
+        <div class="starter-template"> 
 
             <div id="tablesDiv">
-                <h1 id="accountHeader"></h1> 
-                <br>
-
-                <h1>Account holder Contact inform</h1> 
+                <h1>Projects List</h1> 
                 <table class="table table-bordered table-striped table-condensed cf" id="accountContact">
                     <thead class="cf" >
                         <tr>                   
-                            <th>Contact Id</th>
-                            <th>Account Id</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>                    
+                            <th>PK</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Start Date</th>
+                            <th>End Date</th> 
+                            <th>Is Billable</th> 
+                            <th>Is Active</th> 
                         </tr>
                     </thead>
-                    <tbody></tbody>
-                </table>
-                <br>
-                <h1>Invoice details</h1>               
-
-                <table class="table table-bordered table-striped table-condensed cf" id="accountInvoiceDetails">
-                    <thead class="cf" >
-                        <tr>                   
-                            <th>Invoice Id</th>
-                            <th>Account Id</th>
-                            <th>Opening Balance</th>
-                            <th>Closing Balance</th>
-                            <th>Invoice Due Date</th>                    
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                <br>
-                <h1>Itemised Calls</h1>
-                <table class="table table-bordered table-striped table-condensed cf" id="accountItems">
-                    <thead class="cf" >
-                        <tr>                   
-                            <th>Item Id</th>
-                            <th>invoice Id</th>
-                            <th>Call Date</th>
-                            <th>Call Time</th>
-                            <th>Call Type</th> 
-                            <th>Call Cost</th> 
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                    <tbody>
+                       ${projectsList}
+                    </tbody>
+                </table>              
+                
             </div>
         </div>
     </div>
