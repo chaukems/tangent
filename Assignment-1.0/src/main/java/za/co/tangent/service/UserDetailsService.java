@@ -1,9 +1,12 @@
 package za.co.tangent.service;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
     String inMemoryUsername = "admin1";
+    @Autowired
+    private Gson gson;
 
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -25,6 +30,8 @@ public class UserDetailsService implements org.springframework.security.core.use
         Map<String, String> users = new HashMap();
 
         users.put("admin1", "admin1");
+
+        String result = "";
 
         String token = "";
 
@@ -43,7 +50,12 @@ public class UserDetailsService implements org.springframework.security.core.use
             HttpEntity<MultiValueMap<String, String>> entity
                     = new HttpEntity<MultiValueMap<String, String>>(parameters, createHeaders(username, username));
             // Get the response as a string
-            token = restTemplate.postForObject(url, entity, String.class);
+            result = restTemplate.postForObject(url, entity, String.class);
+
+            TokenClass tokenObj = gson.fromJson(result, new TypeToken<TokenClass>() {
+            }.getType());
+
+            token = tokenObj.getToken();
 
         } else {
             throw new UsernameNotFoundException("Username not found");
@@ -51,8 +63,8 @@ public class UserDetailsService implements org.springframework.security.core.use
 
         MyUserDetailsModel loggedUserModel = new MyUserDetailsModel(username, username,
                 true, true, true, true, null, token);
-        
-        return loggedUserModel;        
+
+        return loggedUserModel;
     }
 
     HttpHeaders createHeaders(final String username, final String password) {
