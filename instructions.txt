@@ -1,0 +1,9 @@
+Intructions
+1. open the application using Netbeans or Eclipse, make sure that maven is your build script
+2 Unzip the Assigment.zip folder, you can deploy the war file or clean a build the application to generate the war file
+3 I have used tomcat 8.0.26 as my application server, you can use app server of you choice.
+4 after deploying the application, go to the browser point it to where your server is running from
+5 login page will be displayed, username admin1 and password admin1
+
+Please call me if you have any problems 072 856 5946
+I have included pom.xml in the zip file
